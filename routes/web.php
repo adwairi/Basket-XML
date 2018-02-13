@@ -19,3 +19,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/manipulator', 'HomeController@manipulator')->name('manipulator');
+Route::post('/getToken', 'HomeController@getToken')->name('getToken');

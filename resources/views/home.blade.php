@@ -3,6 +3,10 @@
 @section('content')
 <div class="container">
     <div class="row">
+        <div class="panel-heading-controls pull-right">
+            <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#modal-default">New Token
+            </button>
+        </div>
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -11,11 +15,11 @@
                             {{ csrf_field() }}
                             <div class="col-md-6">
                                 <label>Hotel Name:</label>
-                                <input name="HotelName" class="form-control" />
+                                <input name="HotelName" class="form-control filter" />
                             </div>
                             <div class="col-md-3">
                                 <label>Rating</label>
-                                <select name="HotelRating" class="form-control">
+                                <select name="HotelRating" class="form-control filter">
                                     <option value="">select</option>
                                     @for($i=1; $i<=5; $i++)
                                         <option value="{{ $i }}">{{ $i }} star</option>
@@ -24,7 +28,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label>Is Ready:</label>
-                                <input type="checkbox" name="IsReady" class="form-control" value="true" />
+                                <input type="checkbox" name="IsReady" class="form-control filter" value="true" />
                             </div>
                         </form>
                     </div>
@@ -48,9 +52,68 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade pull-left" id="modal-default" tabindex="-1" style="display: inline-table;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title" id="myModalLabel">New Token</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="getTokenForm" method="POST" action="{{ route('getToken') }}">
+                    {{ csrf_field() }}
+
+                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                        <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+
+                        <div class="col-md-6">
+                            <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+
+                            @if ($errors->has('email'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                        <label for="password" class="col-md-4 control-label">Password</label>
+
+                        <div class="col-md-6">
+                            <input id="password" type="password" class="form-control" name="password" required>
+
+                            @if ($errors->has('password'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+                    </div>
+                </form>
+                <button class="btn btn-primary pull-right" id="getToken">
+                    Get Token
+                </button>
+                <textarea class="form-control" id="token"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 @section('scripts')
 <script>
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     $(document).ready(function () {
         getData();
     });
@@ -58,7 +121,7 @@
 //    $(document).on('change', 'form-control', function () {
 //        getData();
 //    })
-    $('.form-control').change(function () {
+    $('.filter').change(function () {
         getData();
     });
 
@@ -114,6 +177,19 @@
         });
 
     }
+    
+    
+    $('#getToken').click(function () {
+        var data = $('#getTokenForm').serializeArray();
+        $.ajax({
+            url: '{{ route("getToken") }}',
+            type: 'POST',
+            data: data,
+            dataType: 'json',
+        }).done(function(data) {
+            $('#token').text(data.token);
+        });
+    });
 
 </script>
 @endsection

@@ -40,12 +40,12 @@ class HomeController extends Controller
             return response()->json(['error'=>$validator->errors()], 401);
         }
 
-        $email = 'admin@basket.com'; // it should be $request->input('email');
-        $password = '123456'; // it should be $request->input('password');
+        $email = $request->input('email'); //'admin@basket.com'; // it should be $request->input('email');
+        $password = $request->input('password'); //'123456'; // it should be $request->input('password');
 
         $guzzel = new GuzzelRequest();
         $token = $guzzel->getToken($email, $password);
-        return $token;
+        return response()->json(['token'=>$token]);
     }
 
     public function manipulator(Request $request){

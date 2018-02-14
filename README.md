@@ -27,8 +27,25 @@ Note: In my example i used a fixed token.
 
 
 ## Add new file structure 
-* In case you need to add a new file structure (ex. CSV), create a new model (CSV.php) and write the code for manipulating this structure.
-* ExpandManiPulator.php
+* I created two classes for manipulating the files:
+    - Manipulator: the main class that manipulate XML and JSON.
+    - ExpandManiPulator: extend Manipulator, and used for manipulate any new structure.
+* If need to add new file structure (ex. CSV), Create a new class CSV.php , which will be similler to XML & JSON classes..
+* Create an instance from CSV in ExpandManiPulator's constructure.
+
+```
+use App\Models\CSV;
+
+class ExpandManiPulator extends Manipulator
+{
+    // If we need to add new file structure (ex: CSV, YMAL, ...etc)
+    function __construct($filters = [])
+    {
+        parent::__construct($filters);
+        new CSV($filters);
+    }
+}
+```
 
 ## Full Documentation
 Assume we have an XML file which contains available hotels and rooms and a JSON file which also contains available hotels and rooms as well, but with a different structure and we need a web service which manipulates the two different files and returns a unified output as XML to a front-end MVC app that displays returned results in a grid (each row represent a hotel with child rows that represent rooms) with a filtration facility.

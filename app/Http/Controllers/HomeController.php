@@ -44,7 +44,7 @@ class HomeController extends Controller
         $password = $request->input('password'); //'123456'; // it should be $request->input('password');
 
         $guzzel = new GuzzelRequest();
-        $token = $guzzel->getToken($email, $password);
+        $token = $guzzel->APILogin($email, $password);
         $this->accessToken = $token;
         return response()->json(['token'=>$token]);
     }

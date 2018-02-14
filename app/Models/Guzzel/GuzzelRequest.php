@@ -22,7 +22,7 @@ class GuzzelRequest
         return $this;
     }
 
-    public function getToken($email, $password){
+    public function APILogin($email, $password){
         $url = url('/').'/api/login';
         $response =  $this->client->post($url, [
             'form_params' => [

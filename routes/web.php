@@ -19,4 +19,5 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/manipulator', 'HomeController@manipulator')->name('manipulator');
-Route::post('/getToken', 'HomeController@getToken')->name('getToken');
+Route::post('/APILogin', 'HomeController@APILogin')->name('APILogin');
+Route::post('/APIRegister', 'HomeController@APIRegister')->name('APIRegister');

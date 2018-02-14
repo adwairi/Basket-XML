@@ -14,7 +14,7 @@ class HomeController extends Controller
      * @return void
      */
 
-    private $accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjAxZTc5NGJkNGIxNjliNTc3ZDk5ZjE0ZDljZmRiODBhOTRjMzA0NjE5OTFmZWVmMTJjOTJiYzk2NTBmOTExZDI2MTkxYmY5MGM3MmI2MGQwIn0.eyJhdWQiOiIxIiwianRpIjoiMDFlNzk0YmQ0YjE2OWI1NzdkOTlmMTRkOWNmZGI4MGE5NGMzMDQ2MTk5MWZlZWYxMmM5MmJjOTY1MGY5MTFkMjYxOTFiZjkwYzcyYjYwZDAiLCJpYXQiOjE1MTg0ODQzNDksIm5iZiI6MTUxODQ4NDM0OSwiZXhwIjoxNTUwMDIwMzQ5LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.pyHr7dEJMzj_PG68gDdpoqD8KkHaxGu6cqIOxPglNOpJNkcWQkkq6OMapEmyb29S2CM6zo7QuR9Jq_0VJF-Pzf4ak0McgzLkLoJYICuCu6Iwqv5S1kAzj2fxDo0TJEWYQZM1pgxPNDOlpqba7vqcXQk02ID-QrI-FAldCZpSVuh91jFn_X39emECp959vFRmVmY9yfReGPbIBAQEOxRQdJkjrFS2HNm2ycHTzQ_J16i8kELtBdZw5JkTCjw-7mjyCT7OyNIcezm4QgWXX65nyh_3hHlYhGbm_i1j7pPFUtH0iN0ugIERYb-8NCmjpiykS8A408w2wd3wwUGTikR8DtpxfCMNI-UnECCJVrQqlRfZBlTQ-U8P78oqyP5RLbG5wKQvft4Hmgyg4q4ctpDN2ObDO_Sli51_yTVpaKXFAXbAmTACCDrIArZ2Xb79IdFhBzo1rKr627Jj1KcURPXtzxECNda4w66DykmJNOggJKuuP3XyECeGFTGO9zHQkHXBE4YrXyi7I3IuSXV3569VyDWz2peMKmVLPlb0QRSeXPE8-bnF9x4Wy5DHpjEIdY0BfYa_U5_rPPeZ3KEsJkIZASawrLAHNlkG2UMHnHbjDeUPu5YjxUWDWA0y5oB9Somsqfn5uZCIqlvgYPDqML1lgF6A5d68Dxn3Ff3SEpUNUiI';
+    private $accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6Ijk2Y2Y0NzFkN2E1NDY1YTNmODRhNWYxYjI2ZmQ4YWRhMzEwN2U5OWVlZTRiODZlMmQ5ZWExZjFjMGE5NmMwZTMxODUzNmNkMGY0ODg2MDhkIn0.eyJhdWQiOiIxIiwianRpIjoiOTZjZjQ3MWQ3YTU0NjVhM2Y4NGE1ZjFiMjZmZDhhZGEzMTA3ZTk5ZWVlNGI4NmUyZDllYTFmMWMwYTk2YzBlMzE4NTM2Y2QwZjQ4ODYwOGQiLCJpYXQiOjE1MTg1NjE2ODYsIm5iZiI6MTUxODU2MTY4NiwiZXhwIjoxNTUwMDk3Njg2LCJzdWIiOiI3Iiwic2NvcGVzIjpbXX0.rf0ZnA0af5Gg7Io_7-gj8AzIkoGiFH0VGhFQgaoHSPnsPa_7SeaBntRqkaap0QZMAZ4KWCTVAUx-1hiHKcfl9NruVmgXgbFyuXXZBu5Oh_F1FGf0GC4ntt3jq7jlHrV8zU5dzk3PEDtf-YHXoAjiqV8ONtpVDXfVRqBXu8pi_11zM0DqTlpKds6Ay9hmsUCyU3sYJcyvFTEQnnkaW9TUFH6jF4g2nimeTJia0EjY1K_eyLF2OXKngfs8Cpo_yN4mFcedPHT7l1r6PyvK0Rtk_svc8A4USgDyMCNpPS1HBRm8B5jxWPyKSNhXMCniri4PmEP9RHQPXzpaHor3Koh4R0O4pb-OSAk0Tn4MFVgbQOJNPQzW8H9gx1xOGqQQ3RjTVz9HskAYVIcTfK3lZm0r6ZpmytHilQoRupHgVb3998qp1AF-XXTyKd4Y8w1VbD_vZRdFwrl3fHgSvBPiGDLthctMz1xeN9Cgjf_KTJYkZ1v1KwfPAy7EsBJrozCmw8alp9GpRsU4QnHQIEK6ewemyhtkFgk2rZ8cpkYx8Dm5YMiwQZoqax9GBmdHD6RiIqHF0dw7n8UPWu9mTVmAgQ8xldW1QPhhTB9pQX19dS44mqwl30X59NEFleTW18EZTrmEYqLoFxYmJkqiL7iY7xC_bi7LBZM8qGZLrohfeT8a9hU';
 
     public function __construct()
     {
@@ -31,7 +31,7 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function getToken(Request $request){
+    public function APILogin(Request $request){
         $validator = Validator::make($request->all(), [
             'email' => 'required|string',
             'password' => 'required|string',
@@ -45,6 +45,13 @@ class HomeController extends Controller
 
         $guzzel = new GuzzelRequest();
         $token = $guzzel->getToken($email, $password);
+        $this->accessToken = $token;
+        return response()->json(['token'=>$token]);
+    }
+
+    public function APIRegister(Request $request){
+        $guzzel = new GuzzelRequest();
+        $token = $guzzel->APIRegister($request);
         return response()->json(['token'=>$token]);
     }
 

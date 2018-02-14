@@ -8,6 +8,7 @@
 
 namespace App\Models\Guzzel;
 
+use Illuminate\Http\Request;
 use GuzzleHttp;
 
 class GuzzelRequest
@@ -28,6 +29,16 @@ class GuzzelRequest
                 'email' => $email,
                 'password' => $password
             ]
+        ]);
+        $resultJSON = json_decode((string) $response->getBody(), true);
+        $this->accessToken = $resultJSON['success']['token'];
+        return $this->accessToken;
+    }
+
+    public function APIRegister(Request $request){
+        $url = url('/').'/api/register';
+        $response =  $this->client->post($url, [
+            'form_params' => $request->all()
         ]);
         $resultJSON = json_decode((string) $response->getBody(), true);
         $this->accessToken = $resultJSON['success']['token'];

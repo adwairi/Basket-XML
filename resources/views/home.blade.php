@@ -4,8 +4,10 @@
 <div class="container">
     <div class="row">
         <div class="panel-heading-controls pull-right">
-            <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#modal-default">New Token
-            </button>
+            <button type="button" class="btn btn-primary pull-right" data-toggle="modal" id="APIRegisterBtn" data-target="#modal-APILogin">API Register</button>
+        </div>
+        <div class="panel-heading-controls pull-right">
+            <button type="button" class="btn btn-primary pull-right" data-toggle="modal" id="APILoginBtn" data-target="#modal-APILogin">API Login</button>
         </div>
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -53,15 +55,15 @@
     </div>
 </div>
 
-<div class="modal fade pull-left" id="modal-default" tabindex="-1" style="display: inline-table;">
+<div class="modal fade pull-right" id="modal-APILogin" tabindex="-1" style="display: inline-table;">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">×</button>
-                <h4 class="modal-title" id="myModalLabel">New Token</h4>
+                <h4 class="modal-title" id="myModalLabel">API Login</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" id="getTokenForm" method="POST" action="{{ route('getToken') }}">
+                <form class="form-horizontal" id="APILoginForm" method="POST" action="{{ route('APILogin') }}">
                     {{ csrf_field() }}
 
                     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
@@ -92,8 +94,65 @@
                         </div>
                     </div>
                 </form>
-                <button class="btn btn-primary pull-right" id="getToken">
-                    Get Token
+                <form class="form-horizontal" method="POST" id="APIRegisterForm" action="{{ route('APIRegister') }}">
+                    {{ csrf_field() }}
+
+                    <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                        <label for="name" class="col-md-4 control-label">Name</label>
+
+                        <div class="col-md-6">
+                            <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+
+                            @if ($errors->has('name'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                        <label for="email1" class="col-md-4 control-label">E-Mail Address</label>
+
+                        <div class="col-md-6">
+                            <input id="email1" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+
+                            @if ($errors->has('email'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                        <label for="password1" class="col-md-4 control-label">Password</label>
+
+                        <div class="col-md-6">
+                            <input id="password1" type="password" class="form-control" name="password" required>
+
+                            @if ($errors->has('password'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
+
+                        <div class="col-md-6">
+                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                        </div>
+                    </div>
+                </form>
+
+                <button class="btn btn-primary pull-right" id="APIRegister">
+                    Regiter
+                </button>
+                <button class="btn btn-primary pull-right" id="APILogin">
+                    Login
                 </button>
                 <textarea class="form-control" id="token"></textarea>
             </div>
@@ -103,6 +162,7 @@
         </div>
     </div>
 </div>
+
 
 @endsection
 @section('scripts')
@@ -117,12 +177,24 @@
     $(document).ready(function () {
         getData();
     });
-
-//    $(document).on('change', 'form-control', function () {
-//        getData();
-//    })
     $('.filter').change(function () {
         getData();
+    });
+
+    $('#APIRegisterBtn').click(function () {
+//        $('#APILoginForm').hide();
+        $("#APILoginForm").css("display","none");
+        $("#APILogin").css("display","none");
+        $('#APIRegisterForm').show();
+        $('#APIRegister').show();
+    });
+    $('#APILoginBtn').click(function () {
+        $('#APILoginForm').show();
+        $('#APILogin').show();
+//        $('#APIRegister').hide();
+        $("#APIRegisterForm").css("display","none");
+        $("#APIRegister").css("display","none");
+
     });
 
     function getData() {
@@ -179,10 +251,22 @@
     }
     
     
-    $('#getToken').click(function () {
-        var data = $('#getTokenForm').serializeArray();
+    $('#APILogin').click(function () {
+        var data = $('#APILoginForm').serializeArray();
         $.ajax({
-            url: '{{ route("getToken") }}',
+            url: '{{ route("APILogin") }}',
+            type: 'POST',
+            data: data,
+            dataType: 'json',
+        }).done(function(data) {
+            $('#token').text(data.token);
+        });
+    });
+
+    $('#APIRegister').click(function () {
+        var data = $('#APIRegisterForm').serializeArray();
+        $.ajax({
+            url: '{{ route("APIRegister") }}',
             type: 'POST',
             data: data,
             dataType: 'json',

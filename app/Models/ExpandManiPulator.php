@@ -13,7 +13,7 @@ class ExpandManiPulator extends Manipulator
     function __construct($filters = [])
     {
         parent::__construct($filters);
-        $this->csvArray = new CSV($filters);
+//        $this->csvArray = new CSV($filters);
     }
 
 

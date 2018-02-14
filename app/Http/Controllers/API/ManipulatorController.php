@@ -7,8 +7,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Validator;
-use App\Models\Manipulator;
-// use App\Models\ExpandManiPulator; // use this model in case you need to add new file structure.
+use App\Models\ExpandManiPulator; // use this model in case you need to add new file structure.
 class ManipulatorController extends Controller
 {
     public $successStatus = 200;
@@ -23,7 +22,7 @@ class ManipulatorController extends Controller
 
         $this->validator($request);
         $filters = $request->all();
-        $manipulator = new Manipulator($filters); // use new ExpandManiPulator($filters) model in case you need to add new file structure.
+        $manipulator = new ExpandManiPulator($filters);
         $output = $manipulator->getResult();
         return $output;
     }
